@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: xunwu
+  thymeleaf:
+    cache: true
+elasticsearch:
+  host: 127.0.0.1
+  port: 9300
+  cluster:
+    name: docker-cluster

@@ -1,0 +1,55 @@
+spring:
+  #Mysql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/house?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  # redis config
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: redis1
+    pool:
+      min-idle: 1
+    timeout: 3000
+
+  # thymeleaf
+  thymeleaf:
+    cache: false
+
+  # multipart config
+  http:
+    multipart:
+      enabled: true
+      location: e:/tmp
+      file-size-threshold: 5MB
+      max-request-size: 20MB
+
+  # kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: xunwu
+
+  #elasticsearch
+elasticsearch:
+  scheme: http
+  cluster:
+    name: docker-cluster
+  host: localhost
+  port: 9200
+# 使用七牛云 对象存储，免费试用，一个月，过期后需要重新创建空间，并把空间绑定的测试域名放在prefix
+qiniu:
+  AccessKey: zpMZ5lYzB4IUBBSJ65_C1zyUnnevQfn7HDpL5x3K
+  SecretKey: Pb37wlTYM4J1pGs8TTakZSq_u8__EbQbCxU1YGcO
+  Bucket: es-lis
+  cdn:
+    domain: radv1ejxr.hn-bkt.clouddn.com/
+logging:
+  level:
+    com:
+      lcz:
+        service:
+          search: debug

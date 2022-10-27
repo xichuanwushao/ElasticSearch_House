@@ -1,0 +1,48 @@
+spring:
+  profiles:
+    active: dev
+
+  # jpa config
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  #session
+  session:
+    store-type: redis
+
+  #thymeleaf
+  thymeleaf:
+    mode: HTML
+    suffix: .html
+    prefix: classpath:/templates/
+
+  #http
+security:
+  basic:
+    enabled: false
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 1080
+# 使用七牛云 对象存储，免费试用，一个月，过期后需要重新创建空间，并把空间绑定的测试域名放在prefix
+qiniu:
+  AccessKey: en2SXwZrSYSKOlk1IKTSP-geHtv3_XLsYeKnbReW
+  SecretKey: UXB6y7egr1wUYe0GNqQG7xWc35H2t-OWzUkDzRue
+  Bucket: es-housemap
+  cdn:
+    domain: r9sushvt6.bkt.clouddn.com/
+
+aliyun:
+  sms:
+    accessKey: \**
+    accessKeySecret: \**
+    template:
+      code: \**
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
