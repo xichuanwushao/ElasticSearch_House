@@ -55,10 +55,11 @@ public class AddressServiceImpl implements IAddressService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String BAIDU_MAP_KEY = "L2YrwtniS9RrrZpZrmFUF1Prs4l7ZFKR";
+//    private static final String BAIDU_MAP_KEY = "L2YrwtniS9RrrZpZrmFUF1Prs4l7ZFKR";
+    private static final String BAIDU_MAP_KEY = "FICpNXF7uzerZRLMFTdvQRfMzoWNGS2f";
 
-    private static final String BAIDU_MAP_GEOCONV_API = "http://api.map.baidu.com/geocoder/v2/?";
-
+//    private static final String BAIDU_MAP_GEOCONV_API = "http://api.map.baidu.com/geocoder/v2/?";
+    private static final String BAIDU_MAP_GEOCONV_API = "https://api.map.baidu.com/geocoding/v3/?";
     /**
      * POI数据管理接口
      */
