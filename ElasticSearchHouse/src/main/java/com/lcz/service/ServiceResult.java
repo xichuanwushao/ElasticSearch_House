@@ -76,4 +76,13 @@ public class ServiceResult<T> {
             return value;
         }
     }
+
+    @Override
+    public String toString() {
+        return "ServiceResult{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }
