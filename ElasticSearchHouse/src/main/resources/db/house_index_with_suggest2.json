@@ -1,0 +1,88 @@
+//{
+//  "settings": {
+//    "number_of_replicas": 0 //不需要备份
+//  },
+//  "mappings": {
+//    "dynamic": false,
+//    "properties": {
+//      "houseId": {
+//        "type": "long"
+//      },
+//      "title": {标题
+//        "type": "text",
+//        "analyzer": "ik_smart",
+//        "search_analyzer": "ik_smart"
+//      },
+//      "price": {价格
+//        "type": "integer"
+//      },
+//      "area": {面积
+//        "type": "integer"
+//      },
+//      "createTime": {创建时间 排序
+//        "type": "date",
+//        "format": "strict_date_optional_time||epoch_millis"
+//      },
+//      "lastUpdateTime": {跟新时间
+//        "type": "date",
+//        "format": "strict_date_optional_time||epoch_millis"
+//      },
+//      "cityEnName": {城市
+//        "type": "keyword"
+//      },
+//      "regionEnName": {地区
+//        "type": "keyword"
+//      },
+//      "direction": {朝向
+//        "type": "integer"
+//      },
+//      "distanceToSubway": {地铁距离
+//        "type": "integer"
+//      },
+//      "subwayLineName": {地铁线路
+//        "type": "keyword"
+//      },
+//      "subwayStationName": {地铁站
+//        "type": "keyword"
+//      },
+//      "tags": { 房屋标签
+//        "type": "text"
+//      },
+//      "street": { 街道
+//        "type": "keyword"
+//      },
+//      "district": { 小区
+//        "type": "keyword"
+//      },
+//      "description": {描述
+//        "type": "text",
+//        "analyzer": "ik_smart",
+//        "search_analyzer": "ik_smart"
+//      },
+//      "layoutDesc" : {户型介绍
+//        "type": "text",
+//        "analyzer": "ik_smart",
+//        "search_analyzer": "ik_smart"
+//      },
+//      "traffic": {交通出行
+//        "type": "text",
+//        "analyzer": "ik_smart",
+//        "search_analyzer": "ik_smart"
+//      },
+//      "roundService": {周边配套
+//        "type": "text",
+//        "analyzer": "ik_smart",
+//        "search_analyzer": "ik_smart"
+//      },
+//      "rentWay": {租赁方式
+//        "type": "integer"
+//      },
+//      "suggest": {
+//        "type": "completion"
+//      },
+//      "location": {
+//        "type": "geo_point"
+//      }
+//    }
+//  }
+//}
