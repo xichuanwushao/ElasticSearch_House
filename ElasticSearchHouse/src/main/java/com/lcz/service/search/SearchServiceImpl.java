@@ -227,7 +227,14 @@ public class SearchServiceImpl implements ISearchService {
 
     @Override
     public void index(Long houseId) {
-        this.index(houseId, 0);
+        HouseIndexMessage message = new HouseIndexMessage();
+        message.setHouseId(houseId);
+        try {
+            createOrUpdateIndex(message);
+        }catch (Exception e){
+
+        }
+//        this.index(houseId, 0);
     }
 
     private void index(Long houseId, int retry) {
@@ -269,7 +276,7 @@ public class SearchServiceImpl implements ISearchService {
         }
 
         try {
-            UpdateRequest request = new UpdateRequest().index(INDEX_NAME).doc(objectMapper.writeValueAsBytes(indexTemplate), XContentType.JSON);
+            UpdateRequest request = new UpdateRequest().index(INDEX_NAME).doc(objectMapper.writeValueAsBytes(indexTemplate), XContentType.JSON).id(esId);
             UpdateResponse response = esClient.update(request, RequestOptions.DEFAULT);
 
             logger.debug("Update index with house: " + indexTemplate.getHouseId());
