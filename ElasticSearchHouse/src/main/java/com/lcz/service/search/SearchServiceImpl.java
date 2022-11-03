@@ -68,7 +68,7 @@ import java.util.Set;
 @Service
 public class SearchServiceImpl implements ISearchService {
     private static final Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
-    private static final String INDEX_NAME = "xunwu_s0";
+    private static final String INDEX_NAME = "xunwu";
 
     private static final String INDEX_TYPE = "house";
 
