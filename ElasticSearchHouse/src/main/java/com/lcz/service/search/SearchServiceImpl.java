@@ -304,7 +304,14 @@ public class SearchServiceImpl implements ISearchService {
 
     @Override
     public void remove(Long houseId) {
-        this.remove(houseId, 0);
+        HouseIndexMessage message = new HouseIndexMessage();
+        message.setHouseId(houseId);
+        try {
+            removeIndex(message);
+        }catch (Exception e){
+
+        }
+//        this.remove(houseId, 0);
     }
 
     private void remove(Long houseId, int retry) {
