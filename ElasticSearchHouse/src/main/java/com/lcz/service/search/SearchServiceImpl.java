@@ -68,7 +68,7 @@ import java.util.Set;
 @Service
 public class SearchServiceImpl implements ISearchService {
     private static final Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
-    private static final String INDEX_NAME = "xunwu";
+    private static final String INDEX_NAME = "xunwu_s0";
 
     private static final String INDEX_TYPE = "house";
 
@@ -153,9 +153,10 @@ public class SearchServiceImpl implements ISearchService {
         List<HouseTag> tags = tagRepository.findAllByHouseId(houseId);
         if (!CollectionUtils.isEmpty(tags)) {
             List<String> tagStrings = new ArrayList<>();
-            tags.forEach(houseTag -> tagStrings.add(houseTag.getName()));
+            tags.forEach(houseTag -> tagStrings.add(houseTag.getName()));//把list中对象某个字段取出来 加入到其他list
             indexTemplate.setTags(tagStrings);
         }
+
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .docValueField(INDEX_TYPE)
                 .query(QueryBuilders.termQuery(HouseIndexKey.HOUSE_ID, houseId));

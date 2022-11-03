@@ -36,6 +36,7 @@ public class SearchServiceTests extends ApplicationTests {
         rentSearch.setSize(10);
         rentSearch.setKeywords("国贸");
         ServiceMultiResult<Long> serviceResult = searchService.query(rentSearch);
+        System.out.println(serviceResult.getResult());
         Assert.assertTrue(serviceResult.getTotal() > 0);
     }
 }
