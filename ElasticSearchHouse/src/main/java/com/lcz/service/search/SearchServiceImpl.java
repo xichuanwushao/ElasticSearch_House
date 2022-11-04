@@ -523,6 +523,7 @@ public class SearchServiceImpl implements ISearchService {
                         .filter(QueryBuilders.termQuery(HouseIndexKey.CITY_EN_NAME, cityEnName))
                         .filter(QueryBuilders.termQuery(HouseIndexKey.REGION_EN_NAME, regionEnName))
                         .filter(QueryBuilders.termQuery(HouseIndexKey.DISTRICT, district)))
+                //HouseIndexKey.AGG_DISTRICT 聚合小区名 HouseIndexKey.DISTRICT 对哪个字段进行聚合 .size(0)不需要原始数据 只需要聚合的数据
                 .aggregation(AggregationBuilders.terms(HouseIndexKey.AGG_DISTRICT).field(HouseIndexKey.DISTRICT)).size(0);
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME).source(searchSourceBuilder);
         SearchResponse response = null;
