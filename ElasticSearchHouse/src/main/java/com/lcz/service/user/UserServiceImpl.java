@@ -54,10 +54,15 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServiceResult<UserDTO> findById(Long userId) {
-        User user = userRepository.findOne(userId);
-        if (user == null) {
-            return ServiceResult.notFound();
-        }
+//        User user = userRepository.findOne(userId);
+//        if (user == null) {
+//            return ServiceResult.notFound();
+//        }
+        User user = new User();
+        user.setId(1L);
+        user.setName("waliwali");
+        user.setPhoneNumber("15111111111");
+        user.setAvatar("http://7xo6gy.com1.z0.glb.clouddn.com/99ff568bd61c744bf31185aeddf13580.png");
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return ServiceResult.of(userDTO);
     }

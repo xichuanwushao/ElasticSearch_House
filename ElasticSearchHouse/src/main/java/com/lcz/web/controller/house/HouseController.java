@@ -1,5 +1,6 @@
 package com.lcz.web.controller.house;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,10 @@ public class HouseController {
             return ApiResponse.ofStatus(ApiResponse.Status.BAD_REQUEST);
         }
         ServiceResult<List<String>> result = this.searchService.suggest(prefix);
+//        List<String> result = new ArrayList<>();
+//        result.add("超棒瓦力");
+//        result.add("很棒瓦力");
+//        return ApiResponse.ofSuccess(result);
         return ApiResponse.ofSuccess(result.getResult());
     }
 

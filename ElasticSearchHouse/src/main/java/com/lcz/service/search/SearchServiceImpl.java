@@ -254,7 +254,7 @@ public class SearchServiceImpl implements ISearchService {
 
 
     private boolean create(HouseIndexTemplate indexTemplate) {
-        if (!updateSuggest(indexTemplate)) {
+        if (!updateSuggest(indexTemplate)) { //search-as-you-type自动补全
             return false;
         }
 
@@ -426,9 +426,10 @@ public class SearchServiceImpl implements ISearchService {
 
     @Override
     public ServiceResult<List<String>> suggest(String prefix) {
+        //提示多少个 默认5个 suggest要和索引字段名称对应起来
         CompletionSuggestionBuilder suggestion = SuggestBuilders.completionSuggestion("suggest").prefix(prefix).size(5);
 
-        SuggestBuilder suggestBuilder = new SuggestBuilder().addSuggestion("autocomplete", suggestion);
+        SuggestBuilder suggestBuilder = new SuggestBuilder().addSuggestion("autocomplete", suggestion);//固定写法
 
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME).source(new SearchSourceBuilder().suggest(suggestBuilder));
         SearchResponse response = null;
@@ -447,17 +448,17 @@ public class SearchServiceImpl implements ISearchService {
         Suggest.Suggestion result = suggest.getSuggestion("autocomplete");
 
         int maxSuggest = 0;
-        Set<String> suggestSet = new HashSet<>();
+        Set<String> suggestSet = new HashSet<>();//需要对结果进行过滤 因为有重复的提示词语
 
         for (Object term : result.getEntries()) {
             if (term instanceof CompletionSuggestion.Entry) {
                 CompletionSuggestion.Entry item = (CompletionSuggestion.Entry) term;
 
-                if (item.getOptions().isEmpty()) {
+                if (item.getOptions().isEmpty()) {//提示备选项为空
                     continue;
                 }
 
-                for (CompletionSuggestion.Entry.Option option : item.getOptions()) {
+                for (CompletionSuggestion.Entry.Option option : item.getOptions()) {//提示备选项不为空
                     String tip = option.getText().string();
                     if (suggestSet.contains(tip)) {
                         continue;
@@ -478,13 +479,13 @@ public class SearchServiceImpl implements ISearchService {
     private boolean updateSuggest(HouseIndexTemplate indexTemplate) {
         AnalyzeRequest analyzeRequest = AnalyzeRequest.withIndexAnalyzer(INDEX_NAME, "ik_smart", indexTemplate.getTitle(),
                 indexTemplate.getLayoutDesc(), indexTemplate.getRoundService(),
-                indexTemplate.getDescription(), indexTemplate.getSubwayLineName(),
+                indexTemplate.getDescription(), indexTemplate.getSubwayLineName(),//自动补全其实就是去请求分词接口
                 indexTemplate.getSubwayStationName());
         List<AnalyzeResponse.AnalyzeToken> tokens = null;
 
         try {
-            AnalyzeResponse response = esClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT);
-            tokens = response.getTokens();
+            AnalyzeResponse response = esClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT);//分词结果
+            tokens = response.getTokens();//tokens就是每一个词语
         } catch (IOException e) {
             logger.error("updateSuggest错误", e);
             return false;
@@ -502,11 +503,11 @@ public class SearchServiceImpl implements ISearchService {
             }
 
             HouseSuggest suggest = new HouseSuggest();
-            suggest.setInput(token.getTerm());
+            suggest.setInput(token.getTerm());//这里默认一样的权重
             suggests.add(suggest);
         }
 
-        // 定制化小区自动补全
+        // 定制化小区自动补全 对于一些keyword不需要分词的字如何去做呢
         HouseSuggest suggest = new HouseSuggest();
         suggest.setInput(indexTemplate.getDistrict());
         suggests.add(suggest);
