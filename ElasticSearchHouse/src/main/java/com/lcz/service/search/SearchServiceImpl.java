@@ -379,7 +379,7 @@ public class SearchServiceImpl implements ISearchService {
 
 //	        boolQuery.should(
 //	                QueryBuilders.matchQuery(HouseIndexKey.TITLE, rentSearch.getKeywords())
-//	                        .boost(2.0f)
+//	                        .boost(2.0f) //设置查询字段的权重
 //	        );
 
         boolQuery.must(
@@ -397,7 +397,7 @@ public class SearchServiceImpl implements ISearchService {
                 .sort(HouseSort.getSortKey(rentSearch.getOrderBy()), SortOrder.fromString(rentSearch.getOrderDirection()))
                 .from(rentSearch.getStart())
                 .size(rentSearch.getSize())
-                .fetchSource(HouseIndexKey.HOUSE_ID, null);
+                .fetchSource(HouseIndexKey.HOUSE_ID, null);//解决searchRequest数据集过大的问题 优化 这样响应就会更加快一些
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME).source(searchSourceBuilder);
 
         logger.debug(searchRequest.toString());
