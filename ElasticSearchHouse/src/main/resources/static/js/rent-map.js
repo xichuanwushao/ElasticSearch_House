@@ -1,5 +1,6 @@
+//展示聚合后每个区域的房间数
 var regionCountMap = {}, // 地区数据 //houseCount + '套 求区域内出租房屋的个数
-    labels = [], // 标签列表
+    labels = [], // 标签列表 //存入覆盖物内容 方便后续事件功能内容直接获取
     params = {
         orderBy: 'lastUpdateTime',
         orderDirection: 'desc'
@@ -19,7 +20,7 @@ function load(city, regions, aggData) {
     for (var i = 0; i < aggData.length; i++) {
         regionCountMap[aggData[i].key] = aggData[i].count;
     }
-
+    //绘制圆形标签 显示区域统计信息
     drawRegion(map, regions);
 
     loadHouseData();
@@ -40,8 +41,10 @@ function load(city, regions, aggData) {
  * @param regionList
  */
 function drawRegion(map, regionList) {
+    //地图覆盖物功能 绘制区域边界
     var boundary = new BMap.Boundary();
-    var polygonContext = {};
+    //存入覆盖物内容 方便后续事件功能内容直接获取
+    var polygonContext = {};//是一个map类型 点集合 多边形无规则的 通过一个一个点聚合一起
     var regionPoint;
     var textLabel;
     for (var i = 0; i < regionList.length; i++) {
@@ -84,13 +87,14 @@ function drawRegion(map, regionList) {
         // 记录行政区域覆盖物
         polygonContext[textContent] = []; // 点集合
         (function (textContent) { // 闭包传参
+            //根据行政区域中文名获取 需要行政规划有该中文名
             boundary.get(city.cn_name + regionList[i].cn_name, function(rs) { // 获取行政区域
                 var count = rs.boundaries.length; // 行政区域边界点集合长度
                 if (count === 0) {
-                    alert('未能获取当前输入行政区域')
+                    alert('未能获取当前输入行政区域')//边界不存在
                     return;
                 }
-
+//1.加载慢 2.每个区域刻画边界不明显 3.所以修改为鼠标移入移出 鼠标事件的绑定
                 for (var j = 0; j < count; j++) {
                     // 建立多边形覆盖物
                     var polygon = new BMap.Polygon(
@@ -108,7 +112,7 @@ function drawRegion(map, regionList) {
                 }
             })
         })(textContent);
-
+//鼠标滑过
         textLabel.addEventListener('mouseover', function (event) {
             var label = event.target;
             var boundaries = polygonContext[label.getContent()];
@@ -118,7 +122,7 @@ function drawRegion(map, regionList) {
                 boundaries[n].show();
             }
         });
-
+//鼠标移出
         textLabel.addEventListener('mouseout', function (event) {
             var label = event.target;
             var boundaries = polygonContext[label.getContent()];
@@ -128,12 +132,12 @@ function drawRegion(map, regionList) {
                 boundaries[n].hide();
             }
         });
-
+//
         textLabel.addEventListener('click', function (event) {
             var label = event.target;
             var map = label.getMap();
-            map.zoomIn();
-            map.panTo(event.point);
+            map.zoomIn();//缩小 中心点移动到整个城市的中心
+            map.panTo(event.point);//移到 事件中心 点击哪里
         });
     }
 
