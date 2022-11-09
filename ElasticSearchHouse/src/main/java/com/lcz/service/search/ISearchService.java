@@ -45,7 +45,7 @@ public interface ISearchService {
 
     /**
      * 聚合城市数据
-     *
+     * 以城市为单位 聚合所有区域下面的设备数据集
      * @param cityEnName
      * @return
      */

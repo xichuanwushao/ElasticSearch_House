@@ -400,7 +400,8 @@ public class SearchServiceImpl implements ISearchService {
                 .fetchSource(HouseIndexKey.HOUSE_ID, null);//解决searchRequest数据集过大的问题 优化 这样响应就会更加快一些
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME).source(searchSourceBuilder);
 
-        logger.debug(searchRequest.toString());
+        logger.debug("searchSourceBuilder "+searchSourceBuilder.toString());
+        logger.debug("searchRequest "+searchRequest.toString());
 
         SearchResponse response = null;
         try {
@@ -548,9 +549,10 @@ public class SearchServiceImpl implements ISearchService {
 
     @Override
     public ServiceMultiResult<HouseBucketDTO> mapAggregate(String cityEnName) {
-
+        //首先查询城市数据 过滤城市
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.boolQuery().filter(QueryBuilders.termQuery(HouseIndexKey.CITY_EN_NAME, cityEnName)))
+                //根据区域来聚合 使用AGG_REGION分组 REGION_EN_NAME字段聚合
                 .aggregation(AggregationBuilders.terms(HouseIndexKey.AGG_REGION).field(HouseIndexKey.REGION_EN_NAME));
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME).source(searchSourceBuilder);
         SearchResponse response = null;
@@ -561,12 +563,12 @@ public class SearchServiceImpl implements ISearchService {
         }
         logger.debug(searchRequest.toString());
 
+        //初始化一个结果集
         List<HouseBucketDTO> buckets = new ArrayList<>();
         if (response.status() != RestStatus.OK) {
             logger.warn("Aggregate status is not ok for " + searchRequest);
             return new ServiceMultiResult<>(0, buckets);
         }
-
         Terms terms = response.getAggregations().get(HouseIndexKey.AGG_REGION);
         for (Terms.Bucket bucket : terms.getBuckets()) {
             buckets.add(new HouseBucketDTO(bucket.getKeyAsString(), bucket.getDocCount()));

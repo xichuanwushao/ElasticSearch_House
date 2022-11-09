@@ -140,6 +140,7 @@ public class HouseController {
 
         return "house-detail";
     }
+    //地图页面显示 北京 12套正在出租 共5个区域
     @GetMapping("house/map")
     public String rentMapPage(@RequestParam(value = "cityEnName") String cityEnName,
                               Model model,

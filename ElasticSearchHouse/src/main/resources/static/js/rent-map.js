@@ -1,4 +1,4 @@
-var regionCountMap = {}, // 地区数据
+var regionCountMap = {}, // 地区数据 //houseCount + '套 求区域内出租房屋的个数
     labels = [], // 标签列表
     params = {
         orderBy: 'lastUpdateTime',
@@ -15,7 +15,7 @@ function load(city, regions, aggData) {
     map.addControl(new BMap.NavigationControl({enableGeolocation: true})); // 添加比例尺控件
     map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT})); // 左上角
     map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-
+//houseCount + '套 求区域内出租房屋的个数
     for (var i = 0; i < aggData.length; i++) {
         regionCountMap[aggData[i].key] = aggData[i].count;
     }
@@ -45,22 +45,23 @@ function drawRegion(map, regionList) {
     var regionPoint;
     var textLabel;
     for (var i = 0; i < regionList.length; i++) {
-
+        //获取中心点
         regionPoint = new BMap.Point(regionList[i].baiduMapLongitude, regionList[i].baiduMapLatitude);
-
+//houseCount + '套 求区域内出租房屋的个数
         var houseCount = 0;
         if (regionList[i].en_name in regionCountMap) {
             houseCount = regionCountMap[regionList[i].en_name];
         }
-
+        //定义标签内容
         var textContent = '<p style="margin-top: 20px; pointer-events: none">' +
             regionList[i].cn_name + '</p>' + '<p style="pointer-events: none">' +
             houseCount + '套</p>';
+        //绘制区域圆形
         textLabel = new BMap.Label(textContent, {
             position: regionPoint, // 标签位置
-            offset: new BMap.Size(-40, 20) // 文本偏移量
+            offset: new BMap.Size(-40, 20) // 文本偏移量 文本在标签什么位置
         });
-
+        //绘制区域圆形样式
         textLabel.setStyle({
             height: '78px',
             width: '78px',
