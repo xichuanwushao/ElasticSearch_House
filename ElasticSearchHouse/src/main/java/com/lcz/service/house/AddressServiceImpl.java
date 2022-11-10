@@ -59,7 +59,7 @@ public class AddressServiceImpl implements IAddressService {
     private static final String BAIDU_MAP_KEY = "FICpNXF7uzerZRLMFTdvQRfMzoWNGS2f";
 
 //    private static final String BAIDU_MAP_GEOCONV_API = "http://api.map.baidu.com/geocoder/v2/?";
-    private static final String BAIDU_MAP_GEOCONV_API = "https://api.map.baidu.com/geocoding/v3/?";
+    private static final String BAIDU_MAP_GEOCONV_API = "https://api.map.baidu.com/geocoding/v3/?";//地理位置服务转码api 用于将文字描述地址转换为具体的经纬度
     /**
      * POI数据管理接口
      */
