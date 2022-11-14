@@ -428,7 +428,7 @@ public class SearchServiceImpl implements ISearchService {
     @Override
     public ServiceResult<List<String>> suggest(String prefix) {
         //提示多少个 默认5个 suggest要和索引字段名称对应起来
-        CompletionSuggestionBuilder suggestion = SuggestBuilders.completionSuggestion("suggest").prefix(prefix).size(5);
+        CompletionSuggestionBuilder suggestion = SuggestBuilders.completionSuggestion("suggest").prefix(prefix).size(5);//提示5个
 
         SuggestBuilder suggestBuilder = new SuggestBuilder().addSuggestion("autocomplete", suggestion);//固定写法
 
