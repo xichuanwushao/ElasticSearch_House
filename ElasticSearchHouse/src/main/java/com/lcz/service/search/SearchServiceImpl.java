@@ -615,8 +615,8 @@ public class SearchServiceImpl implements ISearchService {
                 .filter(
                         QueryBuilders.geoBoundingBoxQuery("location")
                                 .setCorners(
-                                        new GeoPoint(mapSearch.getLeftLatitude(), mapSearch.getLeftLongitude()),
-                                        new GeoPoint(mapSearch.getRightLatitude(), mapSearch.getRightLongitude())
+                                        new GeoPoint(mapSearch.getLeftLatitude(), mapSearch.getLeftLongitude()),//左上角 位置不能输入错误
+                                        new GeoPoint(mapSearch.getRightLatitude(), mapSearch.getRightLongitude())//右下角
                                 )
                 );
 
